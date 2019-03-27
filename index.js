@@ -7,6 +7,7 @@ import writeCustomPropertiesToExports from './lib/write-custom-properties-to-exp
 export default postcss.plugin('postcss-custom-properties', opts => {
 	// whether to preserve custom selectors and rules using them
 	const preserve = 'preserve' in Object(opts) ? Boolean(opts.preserve) : true;
+	const extractRules = 'extractRules' in Object(opts) ? Boolean(opts.extractRules) : false;
 
 	// sources to import custom selectors from
 	const importFrom = [].concat(Object(opts).importFrom || []);
@@ -25,6 +26,6 @@ export default postcss.plugin('postcss-custom-properties', opts => {
 
 		await writeCustomPropertiesToExports(customProperties, exportTo);
 
-		transformProperties(root, customProperties, { preserve });
+		transformProperties(root, customProperties, { preserve, extractRules });
 	};
 });
